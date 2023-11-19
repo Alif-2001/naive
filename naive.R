@@ -13,12 +13,13 @@ library(caret)
 
 # Read Data
 
-data <- read_parquet('../AMRData.parquet')[c(6, 13)]
+data <- read_parquet('../AMRData.parquet')[c(6, 7, 13)]
 
 head(data)
 
 data$order_month <- as.factor(data$order_month)
 data$org_standard <- as.factor(data$org_standard)
+data$species <- as.factor(data$species)
 
 str(data)
 
@@ -32,8 +33,6 @@ naive <- naiveBayes(org_standard~., data=train)
 
 predict <- predict(naive, test[-1])
 predictions<-as.data.frame(predict)
-predictions$predicted<-(predictions[, 1]<predictions[, 2])*1
-table(predictions$predicted, test$org_standard)
 
-con.mat<-confusionMatrix(as.factor(predictions$predicted), test$org_standard)
+con.mat<-confusionMatrix(data=as.factor(predictions$predict), reference = test$org_standard)
 print(con.mat)
