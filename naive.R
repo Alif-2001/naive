@@ -47,7 +47,7 @@ print(con.mat)
 example_input <- data.frame(
   county = "New York",
   order_month = "5",
-  species = "CANINE",
+  species = "FELINE",
   source = "CYSTOCENTESIS"
 )
 example <- predict(naive, example_input, "raw")
